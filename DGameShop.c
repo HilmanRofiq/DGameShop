@@ -541,164 +541,166 @@ void GamePage(struct Game *games){
 
 }
 void BeliGame(struct Game *games){
-    // struct User user;
-    // int hasilDeveloper;
-    // int hasilAdmin;
+    struct User user;
+    int hasilDeveloper;
+    int hasilAdmin;
 
-    // if(user_sekarang.saldo < games->harga) {
-    //     printf("Maaf, Wallet Anda tidak cukup untuk membeli game ini!\n");
-    //     GamePage(games);
-    //     return;
-    // }
+    if(user.saldo < games->harga) {
+        printf("Maaf, Wallet Anda tidak cukup untuk membeli game ini!\n");
+        GamePage(games);
+        return;
+    }
 
-    // user_sekarang.saldo -= games->harga;
+    user.saldo -= games->harga;
 
-    // FILE *fpendapatan = fopen("pendapatan.dat", "ab");
-    // if(fpendapatan) {
-    //     hasilDeveloper = 0.7 * games->harga;
-    //     hasilAdmin = 0.3 * games->harga;
-    //     fprintf(fpendapatan, "Game : %s\nDev  : %d\nAdmin: %d\n\n", games->judul, hasilDeveloper, hasilAdmin);
-    //     fclose(fpendapatan);
-    // }
+    FILE *fpendapatan = fopen("pendapatan.dat", "ab");
+    if(fpendapatan) {
+        hasilDeveloper = 0.7 * games->harga;
+        hasilAdmin = 0.3 * games->harga;
+        fprintf(fpendapatan, "Game : %s\nDev  : %d\nAdmin: %d\n\n", games->judul, hasilDeveloper, hasilAdmin);
+        fclose(fpendapatan);
+    }
 
-    // FILE *friwayat = fopen("riwayat.dat", "ab");
-    // if(friwayat) {
-    //     fprintf(friwayat, "%s membeli %s dengan harga Rp%d\n", user_sekarang.username, games->judul, games->harga);
-    //     fclose(friwayat);
-    // }
+    FILE *friwayat = fopen("riwayat.dat", "ab");
+    if(friwayat) {
+        fprintf(friwayat, "%s membeli %s dengan harga Rp%d\n", user.username, games->judul, games->harga);
+        fclose(friwayat);
+    }
 
-    // FILE *fuser = fopen("user.dat", "rb+");
-    // if(fuser) {
-    //     while(fread(&user, sizeof(struct User), 1, fuser)) {
-    //         if(strcmp(user.username, user_sekarang.username) == 0) {
-    //             user.saldo = user_sekarang.saldo;
-    //             fseek(fuser, -sizeof(struct User), SEEK_CUR);
-    //             fwrite(&user, sizeof(struct User), 1, fuser);
-    //             break;
-    //         }
-    //     }
-    //     fclose(fuser);
-    // }
-    // printf("Pembelian game berhasil!\n");
-    // printf("Sisa saldo : Rp%d\n", user_sekarang.saldo);
-    // printf("Press Enter untuk melihat game. (TEMPORARY MESSAGE)");
-    // getchar();
-    // GamePage(games);
+    FILE *fuser = fopen("user.dat", "rb+");
+    if(fuser) {
+        while(fread(&user, sizeof(struct User), 1, fuser)) {
+            if(strcmp(user.username, user.username) == 0) {
+                user.saldo = user.saldo;
+                fseek(fuser, -sizeof(struct User), SEEK_CUR);
+                fwrite(&user, sizeof(struct User), 1, fuser);
+                break;
+            }
+        }
+        fclose(fuser);
+    }
+    printf("Pembelian game berhasil!\n");
+    printf("Sisa saldo : Rp%d\n", user.saldo);
+    printf("Press Enter untuk melihat game. (TEMPORARY MESSAGE)");
+    getchar();
+    GamePage(games);
 
 }
 void FeedbackGame(struct Game *games){
-    // char feedback[256];
+    char feedback[256];
+    struct User user;
 
-    // printf("=== FEEDBACK ===\n");
-    // printf("Game : %s\n", games->judul);
-    // printf("Tuliskan review / feedback Anda : ");
-    // fgets(feedback, sizeof(feedback), stdin);
-    // feedback[strcspn(feedback, '\n')] = '\0';
+    printf("=== FEEDBACK ===\n");
+    printf("Game : %s\n", games->judul);
+    printf("Tuliskan review / feedback Anda : ");
+    fgets(feedback, sizeof(feedback), stdin);
+    feedback[strcspn(feedback, '\n')] = '\0';
 
-    // FILE *ffeedback = fopen("feedback.txt", "a");
-    // if(ffeedback) {
-    //     fprintf(ffeedback, "%s memiliki feedback tentang %s : %s\n", user_sekarang.username, games->judul, feedback);
-    //     fclose(ffeedback);
-    //     printf("Feedback berhasil terkirim!\n");
-    // } else {
-    //     printf("Feedback gagal terkirim.\n");
-    // }
+    FILE *ffeedback = fopen("feedback.txt", "a");
+    if(ffeedback) {
+        fprintf(ffeedback, "%s memiliki feedback tentang %s : %s\n", user.username, games->judul, feedback);
+        fclose(ffeedback);
+        printf("Feedback berhasil terkirim!\n");
+    } else {
+        printf("Feedback gagal terkirim.\n");
+    }
     
-    // printf("Press Enter untuk melihat game. (TEMPORARY MESSAGE)");
-    // getchar();
-    // GamePage(games);
+    printf("Press Enter untuk melihat game. (TEMPORARY MESSAGE)");
+    getchar();
+    GamePage(games);
 
 
 }
 void Wallet(){
-    // struct User user;
-    // int pilihan;
+    struct User user;
+    int pilihan;
 
-    // printf("=== DGAMESHOP WALLET ===\n");
-    // printf("Username    : %s\n", user_sekarang.username);
-    // printf("Saldo       : %d\n", user_sekarang.saldo);
+    printf("=== DGAMESHOP WALLET ===\n");
+    printf("Username    : %s\n", user.username);
+    printf("Saldo       : %d\n", user.saldo);
 
-    // printf("\nMenu :\n");
-    // printf("1. Tambah Saldo\n");
-    // printf("2. Exit\n");
-    // printf("Pilihan : "); scanf("%d", &pilihan);
+    printf("\nMenu :\n");
+    printf("1. Tambah Saldo\n");
+    printf("2. Exit\n");
+    printf("Pilihan : "); scanf("%d", &pilihan);
 
-    // // hmm should i use switch hehe
-    // if (pilihan == 1) {
-    //     system("cls");
-    //     tambahWallet();
-    // } else if (pilihan == 2) {
-    //     system("cls");
-    //     HomePage();
-    // } else {
-    //     system("cls");
-    //     printf("\nPilihan tidak valid! Coba lagi.\n\n");
-    //     Wallet();
-    // }
+    // hmm should i use switch hehe
+    if (pilihan == 1) {
+        system("cls");
+        tambahWallet();
+    } else if (pilihan == 2) {
+        system("cls");
+        HomePage();
+    } else {
+        system("cls");
+        printf("\nPilihan tidak valid! Coba lagi.\n\n");
+        Wallet();
+    }
 
 }
 void tambahWallet() {
-    // struct User user;
-    // int tambah;
+    struct User user;
+    int tambah;
 
-    // printf("Masukkan jumlah saldo yang ingin ditambah : "); scanf("%d", &tambah);
-    // if (tambah <= 0) {
-    //     printf("Jumlah tidak valid!\n\n");
-    //     printf("Press enter kalau melihat ini.");
-    //     getchar();
-    //     Wallet();
-    //     return;
-    // }
+    printf("Masukkan jumlah saldo yang ingin ditambah : "); scanf("%d", &tambah);
+    if (tambah <= 0) {
+        printf("Jumlah tidak valid!\n\n");
+        printf("Press enter kalau melihat ini.");
+        getchar();
+        Wallet();
+        return;
+    }
 
-    // user_sekarang.saldo += tambah;
-    // printf("Saldo berhasil ditambah. Saldo sekarang: %d\n", user_sekarang.saldo);
+    user.saldo += tambah;
+    printf("Saldo berhasil ditambah. Saldo sekarang: %d\n", user.saldo);
 
-    // FILE *fuser = fopen("user.dat", "rb+");
-    // if (fuser) {
-    //     while(fread(&user, sizeof(struct User), 1, fuser)) {
-    //         if(strcmp(user.username, user_sekarang.username) == 0) {
-    //             user.saldo = user_sekarang.saldo;
-    //             fseek(fuser, -sizeof(struct User), SEEK_CUR);
-    //             fwrite(&user, sizeof(struct User), 1, fuser);
-    //             break;
-    //         }
-    //     }
-    //     fclose(fuser);
-    // } else {
-    //     printf("Gagal membuka file!\n");
-    // }
-    // printf("Press enter kalau melihat ini.");
-    // getchar();
-    // Wallet();
+    FILE *fuser = fopen("user.dat", "rb+");
+    if (fuser) {
+        while(fread(&user, sizeof(struct User), 1, fuser)) {
+            if(strcmp(user.username, user.username) == 0) {
+                user.saldo = user.saldo;
+                fseek(fuser, -sizeof(struct User), SEEK_CUR);
+                fwrite(&user, sizeof(struct User), 1, fuser);
+                break;
+            }
+        }
+        fclose(fuser);
+    } else {
+        printf("Gagal membuka file!\n");
+    }
+    printf("Press enter kalau melihat ini.");
+    getchar();
+    Wallet();
 }
 void ProfileUser(){
-    //  int pilihan;
+     int pilihan;
+    struct User user;
     
-    // printf("=== PROFILE USER ===\n");
-    // printf("Username    : %s\n", user_sekarang.username);
-    // printf("Email       : %s\n", user_sekarang.email);
-    // printf("No. Telepon : %s\n", user_sekarang.no_telp);
-    // printf("Saldo       : %d\n", user_sekarang.saldo);
+    printf("=== PROFILE USER ===\n");
+    printf("Username    : %s\n", user.username);
+    printf("Email       : %s\n", user.email);
+    printf("No. Telepon : %s\n", user.no_telp);
+    printf("Saldo       : %d\n", user.saldo);
 
-    // if(user_sekarang.developer) {
-    //     printf("Status : Developer\n");
-    //     printf("Hello Developer, %s!\n", user_sekarang.username);
-    // } else {
-    //     printf("Status : User\n");
-    // }
+    if(user.developer) {
+        printf("Status : Developer\n");
+        printf("Hello Developer, %s!\n", user.username);
+    } else {
+        printf("Status : User\n");
+    }
 
-    // printf("\nMenu:\n");
-    // printf("1. Exit\n");
-    // printf("Pilihan : "); scanf("%d", &pilihan);
+    printf("\nMenu:\n");
+    printf("1. Exit\n");
+    printf("Pilihan : "); scanf("%d", &pilihan);
 
-    // if (pilihan == 1) {
-    //     system("cls");
-    //     MenuUser();
-    // } else {
-    //     system("cls");
-    //     printf("\nPilihan tidak valid! Coba lagi.\n\n");
-    //     ProfileUser();
-    // }
+    if (pilihan == 1) {
+        system("cls");
+        MenuUser();
+    } else {
+        system("cls");
+        printf("\nPilihan tidak valid! Coba lagi.\n\n");
+        ProfileUser();
+    }
 }
 void RegistrasiDeveloper(){
     system("cls");
